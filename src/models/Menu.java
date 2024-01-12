@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 
 import utils.ConsoleColors;
-import utils.Inputter;
+import utils.Utils;
 
 /*
 Menu: là 1 khuôn chuyên đúc ra object quản lý menu
@@ -38,7 +38,7 @@ public class Menu {
 
     // lấy ra lựa chọn
     public int getChoice() {
-        int choice = Inputter.getAnInteger(ConsoleColors.GREEN + "Input your choice: " + ConsoleColors.RESET,
+        int choice = Utils.getInt(ConsoleColors.GREEN + "Input your choice: " + ConsoleColors.RESET,
                 ConsoleColors.RED + "Required between 1 and " + optionList.size() + ConsoleColors.RESET,
                 1, optionList.size());
         return choice;

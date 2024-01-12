@@ -4,13 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.StringTokenizer;
 
 import constants.Message;
 import constants.Regex;
 import models.HotelModel;
 import utils.ConsoleColors;
-import utils.Inputter;
+import utils.Utils;
 import utils.StringTools;
 
 public class HotelManagement {
@@ -25,7 +24,6 @@ public class HotelManagement {
         this.hotelList = new ArrayList<HotelModel>();
         this.userActionList = new ArrayList<HotelModel>();
         this.searchList = new ArrayList<HotelModel>();
-        
     }
 
     public void addNewHotel() {
@@ -34,8 +32,9 @@ public class HotelManagement {
         do {
             do {
                 isExisted = false; // reset isExisted
-                hotel_id = Inputter
-                        .getString(Message.INPUT_HOTEL_ID, Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS, Regex.HOTEL_ID)
+                hotel_id = Utils
+                        .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                                Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS)
                         .toUpperCase();
                 for (HotelModel hotel : userActionList) {
                     if (hotel.getHotel_id().equals(hotel_id)) {
@@ -46,24 +45,27 @@ public class HotelManagement {
                 }
             } while (isExisted);
 
-            String hotel_Name = Inputter.getString(Message.INPUT_HOTEL_NAME, Message.HOTEL_NAME_MUST_BE_LETTER,
-                    Regex.HOTEL_NAME);
+            String hotel_Name = Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME,
+                    Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_BE_LETTER);
             // String hotel_Room_Available =
-            // String.valueOf(Inputter.getAnInteger(Message.INPUT_HOTEL_ROOM_AVAILABLE,
+            // String.valueOf(Utils.getAnInteger(Message.INPUT_HOTEL_ROOM_AVAILABLE,
             // Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER, 0, Integer.MAX_VALUE));
-            String hotel_Room_Available = Inputter.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE,
-                    Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER, Regex.HOTEL_ROOM_AVAILABLE);
-            String hotel_Address = StringTools.formatString(Inputter.getString(Message.INPUT_HOTEL_ADDRESS,
-                    Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER, Regex.HOTEL_ADDRESS));
-            String hotel_Phone = Inputter.getString(Message.INPUT_HOTEL_PHONE, Message.HOTEL_PHONE_MUST_BE_10_DIGITS,
-                    Regex.HOTEL_PHONE); // check regex
-            String hotel_Rating = Inputter.getString(Message.INPUT_HOTEL_RATING,
-                    Message.HOTEL_RATING_MUST_BE_NUMBER_AND_STAR, Regex.HOTEL_RATING);
+            String hotel_Room_Available = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE,
+                    Regex.HOTEL_ROOM_AVAILABLE,
+                    Message.HOTEL_ROOM_AVAILABLE_IS_REQUIRED, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER);
+            String hotel_Address = StringTools.formatString(
+                    Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED,
+                            Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER));
+            String hotel_Phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.HOTEL_PHONE,
+                    Message.HOTEL_PHONE_IS_REQUIRED,
+                    Message.HOTEL_PHONE_MUST_BE_10_DIGITS); // check regex
+            String hotel_Rating = Utils.getString(Message.INPUT_HOTEL_RATING, Regex.HOTEL_RATING,
+                    Message.HOTEL_RATING_IS_REQUIRED,
+                    Message.HOTEL_RATING_MUST_BE_NUMBER_AND_STAR);
 
             HotelModel hotel = new HotelModel(hotel_id, hotel_Name, hotel_Room_Available, hotel_Address, hotel_Phone,
                     hotel_Rating);
             // add to userActionList
-            // hotelList.add(hotel);
             userActionList.add(hotel);
             System.out.println(Message.ADD_NEW_HOTEL_SUCCESSFULLY);
         } while (getUserChoice());
@@ -102,7 +104,7 @@ public class HotelManagement {
         Collections.sort(searchList, orderById);
         return searchList;
     }
-    
+
     // yêu cầu đề thay đổi, search bằng name và sort desc theo hotel_room_available
     public ArrayList<HotelModel> searchHotelListByAddress(String address) {
         searchList.clear(); // reset searchList
@@ -124,8 +126,9 @@ public class HotelManagement {
 
     public void checkExistsHotel() {
         do {
-            String hotel_id = Inputter.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS,
-                    Regex.HOTEL_ID);
+            String hotel_id = Utils
+                    .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                            Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
             HotelModel hotelModel = this.searchHotelByID(hotelList, hotel_id); // search trong hotelList gốc
             if (hotelModel == null) {
                 System.out.println(Message.NO_HOTEL_FOUND);
@@ -137,18 +140,19 @@ public class HotelManagement {
 
     // after updating, the program return to the main screen
     public void updateHotel() {
-        String hotel_id = Inputter.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS,
-                Regex.HOTEL_ID);
+        String hotel_id = Utils
+                .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                        Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
         HotelModel hotel = this.searchHotelByID(userActionList, hotel_id);
         if (hotel == null) {
             System.out.println(Message.HOTEL_DOES_NOT_EXIST);
         } else {
             // các field dữ liệu update có thể rỗng
-            String hotel_Name = Inputter.getString(Message.INPUT_HOTEL_NAME);
-            String hotel_Room_Available = Inputter.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE);
-            String hotel_Address = Inputter.getString(Message.INPUT_HOTEL_ADDRESS);
-            String hotel_Phone = Inputter.getString(Message.INPUT_HOTEL_PHONE);
-            String hotel_Rating = Inputter.getString(Message.INPUT_HOTEL_RATING);
+            String hotel_Name = Utils.getString(Message.INPUT_HOTEL_NAME);
+            String hotel_Room_Available = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE);
+            String hotel_Address = Utils.getString(Message.INPUT_HOTEL_ADDRESS);
+            String hotel_Phone = Utils.getString(Message.INPUT_HOTEL_PHONE);
+            String hotel_Rating = Utils.getString(Message.INPUT_HOTEL_RATING);
 
             // If new information is blank, then not change old information.
             if (hotel_Name.isEmpty()) {
@@ -187,8 +191,9 @@ public class HotelManagement {
 
     // after deleting, the program return to the main screen
     public void deleteHotel() {
-        String hotel_id = Inputter.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS,
-                Regex.HOTEL_ID);
+        String hotel_id = Utils
+                .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                        Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
         // tìm vị trí của hotel cần xóa
         // tìm trong cái mảng gốc
         HotelModel hotel = this.searchHotelByID(hotelList, hotel_id);
@@ -203,32 +208,32 @@ public class HotelManagement {
             System.out.println(Message.DELETE_HOTEL_SUCCESSFULLY);
         }
     }
-    
+
     public void searchHotel() {
         do {
             System.out.println("-------------Search Hotel--------------");
-            int choice = Inputter.getAnInteger("1. Search hotel by id\n2. Search hotel by address\n",
+            int choice = Utils.getInt("1. Search hotel by id\n2. Search hotel by address\n",
                     "Please input 1,2", 1, 2);
             switch (choice) {
                 // search by id
                 case 1:
-                    String id = Inputter.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_NAME_IS_REQUIRED);
+                    String id = Utils.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_NAME_IS_REQUIRED);
                     HotelModel hotel = this.searchHotelByID(hotelList, id);
-                    if(hotel != null){
+                    if (hotel != null) {
                         hotel.showInfo();
-                    }else{
+                    } else {
                         System.out.println(Message.HOTEL_ID_NOT_FOUND);
                     }
                     break;
 
                 // search by name
                 case 2:
-                    String address = Inputter.getString(Message.INPUT_HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED);
+                    String address = Utils.getString(Message.INPUT_HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED);
                     searchList = this.searchHotelListByAddress(address);
-                    if(searchList.isEmpty()){
+                    if (searchList.isEmpty()) {
                         System.out.println(Message.HOTEL_ADDRESS_NOT_FOUND);
-                    }else{
-                        for(HotelModel item : searchList){
+                    } else {
+                        for (HotelModel item : searchList) {
                             item.showInfo();
                         }
                     }
@@ -293,12 +298,7 @@ public class HotelManagement {
             // fix lại bằng cách dùng deepcopy, khi đó khi ta tác động đến phần tử trong
             // userActionList
             // thì phần tử trong hotelList không bị tác động theo
-            userActionList = new ArrayList<>();
-            for (HotelModel item : hotelList) {
-                userActionList
-                        .add(new HotelModel(item.getHotel_id(), item.getHotel_Name(), item.getHotel_Room_Available(),
-                                item.getHotel_Address(), item.getHotel_Phone(), item.getHotel_Rating()));
-            }
+            userActionList = (ArrayList<HotelModel>) hotelList.clone();
 
             // userActionList = new ArrayList<>(hotelList); // copy hotelList to
             // userActionList when load from file
@@ -335,78 +335,18 @@ public class HotelManagement {
         }
     }
 
-//    public boolean readFromFileTxt(String url) {
-//        try {
-//            File file = new File(url);
-//            if (!file.exists()) {
-//                file.createNewFile();
-//            }
-//            BufferedReader br = new BufferedReader(new FileReader(url));
-//            String line = br.readLine();
-//            while (line != null) {
-//                StringTokenizer stk = new StringTokenizer(line, "-");
-//                String hotel_id = stk.nextToken().trim();
-//                String hotel_Name = stk.nextToken().trim();
-//                String hotel_Room_Available = stk.nextToken().trim();
-//                String hotel_Address = stk.nextToken().trim();
-//                String hotel_Phone = stk.nextToken().trim();
-//                String hotel_Rating = stk.nextToken().trim();
-//                HotelModel hotel = new HotelModel(hotel_id, hotel_Name, hotel_Room_Available, hotel_Address,
-//                        hotel_Phone, hotel_Rating);
-//                hotelList.add(hotel);
-//
-//                line = br.readLine();
-//            }
-//            userActionList = new ArrayList<>(hotelList); // copy hotelList to userActionList
-//            System.out.println("Read from file successfully at " + url);
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("Error save to file" + e.getMessage());
-//            return false;
-//        }
-//    }
-//
-//    public boolean saveToFileTxt(String url) {
-//        if (hotelList.isEmpty()) {
-//            System.out.println("Hotel list is empty");
-//            return false;
-//        }
-//        try {
-//            File file = new File(url);
-//            if (!file.exists()) {
-//                file.createNewFile();
-//            }
-//            FileWriter fw = new FileWriter(file);
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            // write file trong mang userActionList
-//            for (HotelModel hotel : userActionList) {
-//                bw.write(hotel.getHotel_id() + "-" + hotel.getHotel_Name() + "-"
-//                        + hotel.getHotel_Room_Available() + "-" + hotel.getHotel_Address() + "-"
-//                        + hotel.getHotel_Phone() + "-" + hotel.getHotel_Rating());
-//                bw.newLine();
-//            }
-//            bw.close();
-//            fw.close();
-//            System.out.println("Save to file successfully at " + url);
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("Error save to file" + e.getMessage());
-//            return false;
-//        }
-//    }
-
     public void quit() {
         System.exit(0);
     }
 
     public boolean getUserChoice() {
-        return Inputter.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N)
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N)
                 .toLowerCase()
                 .equals("y");
     }
 
     public boolean getUserConfirmation() {
-        return Inputter.getYesNo(Message.DO_YOU_WANT_TO_DELETE, Message.PLEASE_INPUT_Y_OR_N)
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_DELETE, Message.PLEASE_INPUT_Y_OR_N)
                 .toLowerCase()
                 .equals("y");
     }

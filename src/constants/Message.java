@@ -15,8 +15,11 @@ public class Message {
     public static final String HOTEL_NAME_IS_REQUIRED = "Hotel name is required";
     public static final String HOTEL_NAME_MUST_BE_LETTER = "Hotel name must be character";
     public static final String HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER = "Hotel room available must be number";
+    public static final String HOTEL_ROOM_AVAILABLE_IS_REQUIRED = "Hotel room available is required";
     public static final String HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER = "Hotel address must not contain special character (except comma)";
-
+    public static final String HOTEL_PHONE_IS_REQUIRED = "Hotel phone is required";
+    public static final String HOTEL_RATING_IS_REQUIRED = "Hotel rating is required";
+    public static final String HOTEL_ID_IS_REQUIRED = "Hotel id is required";
     public static final String HOTEL_ID_NOT_FOUND = "Hotel id not found";
     public static final String HOTEL_ADDRESS_NOT_FOUND = "Hotel address not found";
     public static final String EXIST_HOTEL = "Exist Hotel";
