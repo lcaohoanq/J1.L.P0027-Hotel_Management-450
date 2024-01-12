@@ -11,11 +11,14 @@ public class Message {
     public static final String HOTEL_ID_MUST_BE_H_AND_2_DIGITS = "Hotel id must be H and following by 2 digits (H01, H02, ...)";
     public static final String HOTEL_PHONE_MUST_BE_10_DIGITS = "Hotel phone must be 10 digits";
     public static final String HOTEL_RATING_MUST_BE_NUMBER_AND_STAR = "Hotel rating must be number and star (1 star, 2 star, ...)";
+    public static final String HOTEL_ADDRESS_IS_REQUIRED = "Hotel address is required";
     public static final String HOTEL_NAME_IS_REQUIRED = "Hotel name is required";
     public static final String HOTEL_NAME_MUST_BE_LETTER = "Hotel name must be character";
     public static final String HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER = "Hotel room available must be number";
     public static final String HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER = "Hotel address must not contain special character (except comma)";
 
+    public static final String HOTEL_ID_NOT_FOUND = "Hotel id not found";
+    public static final String HOTEL_ADDRESS_NOT_FOUND = "Hotel address not found";
     public static final String EXIST_HOTEL = "Exist Hotel";
     public static final String NO_HOTEL_FOUND = "No Hotel Found!";
 
