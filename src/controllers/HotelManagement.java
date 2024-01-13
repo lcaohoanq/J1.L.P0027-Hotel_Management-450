@@ -14,17 +14,11 @@ import utils.StringTools;
 
 public class HotelManagement {
 
-    private ArrayList<Hotel> hotelList;
+    private ArrayList<Hotel> hotelList = new ArrayList<>();
 
-    private ArrayList<Hotel> userActionList;
+    private ArrayList<Hotel> userActionList = new ArrayList<>();
 
-    private ArrayList<Hotel> searchList;
-
-    public HotelManagement() {
-        this.hotelList = new ArrayList<Hotel>();
-        this.userActionList = new ArrayList<Hotel>();
-        this.searchList = new ArrayList<Hotel>();
-    }
+    private ArrayList<Hotel> searchList = new ArrayList<>();
 
     public void addNewHotel() {
         boolean isExisted;
@@ -69,7 +63,7 @@ public class HotelManagement {
     }
 
     // search trong hotelList gốc
-    public int searchHotelIndexId(ArrayList<Hotel> hotel, String keyId) {
+    private int searchHotelIndexId(ArrayList<Hotel> hotel, String keyId) {
         for (int i = 0; i < hotel.size(); i++) {
             if (hotel.get(i).getId().equals(keyId)) {
                 return i;
@@ -78,13 +72,13 @@ public class HotelManagement {
         return -1;
     }
 
-    public Hotel searchHotelByID(ArrayList<Hotel> hotel, String keyId) {
+    private Hotel searchHotelByID(ArrayList<Hotel> hotel, String keyId) {
         int pos = this.searchHotelIndexId(hotel, keyId);
         return pos == -1 ? null : hotel.get(pos);
     }
 
-    // yêu cầu đề thay đổi, search bằng name và sort desc theo hotel_room_available
-    public ArrayList<Hotel> searchHotelListByAddress(String address) {
+    // yêu cầu đề thay đổi, search bằng name và sort desc theo hotel_address
+    private ArrayList<Hotel> searchHotelListByAddress(String address) {
         searchList.clear(); // reset searchList
         // tìm trong hotelList
         for (Hotel hotel : hotelList) {
