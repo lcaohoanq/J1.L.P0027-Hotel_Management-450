@@ -107,8 +107,8 @@ public class HotelManagement {
             String id = Utils
                     .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
                             Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
-            Hotel hotelModel = this.searchHotelByID(hotelList, id); // search trong hotelList gốc
-            if (hotelModel == null) {
+            Hotel hotel = this.searchHotelByID(hotelList, id); // search trong hotelList gốc
+            if (hotel == null) {
                 System.out.println(Message.NO_HOTEL_FOUND);
             } else {
                 System.out.println(Message.EXIST_HOTEL);
@@ -189,9 +189,9 @@ public class HotelManagement {
 
     public void searchHotel() {
         do {
-            System.out.println("-------------Search Hotel--------------");
-            int choice = Utils.getInt("1. Search hotel by id\n2. Search hotel by address\n",
-                    "Please input 1,2", 1, 2);
+            System.out.println(Message.SEARCH_HOTEL);
+            int choice = Utils.getInt(Message.SEARCH_HOTEL_OPTIONS_TITLE,
+                    Message.SEARCH_HOTEL_OPTIONS, 1, 2);
             switch (choice) {
                 // search by id
                 case 1:
@@ -222,7 +222,7 @@ public class HotelManagement {
 
     public void displayHotelList() {
         if (hotelList.isEmpty()) {
-            System.out.println("Hotel list is empty");
+            System.out.println(Message.NO_HOTEL_FOUND);
             return;
         }
         Comparator<Hotel> orderByName = new Comparator<Hotel>() {
@@ -238,11 +238,6 @@ public class HotelManagement {
                 "Rating" + ConsoleColors.RESET);
         System.out.println(str);
         for (Hotel item : hotelList) {
-            item.showInfo();
-        }
-
-        System.out.println(ConsoleColors.RED_BACKGROUND + "Test UserActionList: " + ConsoleColors.RESET);
-        for (Hotel item : userActionList) {
             item.showInfo();
         }
     }
@@ -265,7 +260,7 @@ public class HotelManagement {
                     hotelList.add(hotel);
                 }
             } catch (EOFException e) {
-                System.out.println("End of file " + e.getMessage());
+//                System.out.println("End of file " + e.getMessage());
             }
             fo.close();
             fi.close();
@@ -280,17 +275,17 @@ public class HotelManagement {
             // shallow copy, khi mà copy phần tử như này, nếu ta tác động đến phần tử trong
             // userActionList
             // thì phần tử trong hotelList cũng bị tác động theo
-            System.out.println("Deserialized data is loaded from " + url);
+            System.out.println(Message.READ_FILE_SUCCESS + url);
             return true;
         } catch (Exception e) {
-            System.out.println("Error read file " + e.getMessage());
+            System.out.println(Message.READ_FILE_FAILED + e.getMessage());
             return false;
         }
     }
 
     public boolean saveToFile(String url) {
         if (hotelList.isEmpty()) {
-            System.out.println("Hotel list is empty");
+            System.out.println(Message.NO_HOTEL_FOUND);
             return false;
         }
         try {
@@ -301,10 +296,10 @@ public class HotelManagement {
             }
             out.close();
             fOut.close();
-            System.out.println("Serialized data is saved in " + url);
+            System.out.println(Message.WRITE_FILE_SUCCESS + url);
             return true;
         } catch (IOException e) {
-            System.out.println("Serialization failed: " + e.getMessage());
+            System.out.println(Message.WRITE_FILE_FAILED + e.getMessage());
             return false;
         }
     }

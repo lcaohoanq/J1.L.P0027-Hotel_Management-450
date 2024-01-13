@@ -41,6 +41,18 @@ public class Message {
     public static final String DELETE_HOTEL_SUCCESSFULLY = "Delete hotel successfully";
     public static final String DELETE_HOTEL_FAILED = "Delete hotel failed";
 
+    // Search sub-menu
+    public static final String SEARCH_HOTEL = "-------------Search Hotel--------------";
+    public static final String SEARCH_HOTEL_OPTIONS = "Please input 1,2";
+    public static final String SEARCH_HOTEL_OPTIONS_TITLE = "1. Search hotel by id\n2. Search hotel by address\n";
+    
+    // File 
+    public static final String READ_FILE_SUCCESS = "Read file success ";
+    public static final String READ_FILE_FAILED = "Read file failed ";
+    public static final String WRITE_FILE_SUCCESS = "Write file success ";
+    public static final String WRITE_FILE_FAILED = "Write file failed ";
+    
+    
     // User confirmation prompts
     public static final String DO_YOU_WANT_TO_CONTINUE = "Do you want to continue? (y/n): ";
     public static final String DO_YOU_WANT_TO_DELETE = "Do you want to delete? (y/n): ";

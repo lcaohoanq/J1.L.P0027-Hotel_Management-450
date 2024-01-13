@@ -17,7 +17,7 @@ public class Hotel implements Serializable {
     }
 
     public Hotel(String id, String name, String roomAvailable, String address, String phone, String rating) {
-        this.id = id;
+        this.id = id.toUpperCase();
         this.name = name;
         this.roomAvailable = roomAvailable;
         this.address = address;
