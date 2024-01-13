@@ -47,9 +47,6 @@ public class HotelManagement {
 
             String name = Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME,
                     Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_BE_LETTER);
-            // String roomAvailable =
-            // String.valueOf(Utils.getAnInteger(Message.INPUT_HOTEL_ROOM_AVAILABLE,
-            // Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER, 0, Integer.MAX_VALUE));
             String roomAvailable = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE,
                     Regex.HOTEL_ROOM_AVAILABLE,
                     Message.HOTEL_ROOM_AVAILABLE_IS_REQUIRED, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER);
@@ -251,9 +248,6 @@ public class HotelManagement {
     }
 
     public boolean loadFromFile(String url) {
-        // hotelList.clear();
-        // hotelList = FileHandler.deserialize(url);
-        // return hotelList != null;
         if (hotelList.size() > 0) {
             hotelList.clear();
         }
