@@ -12,14 +12,14 @@ public class Main {
         hm.loadFromFile(Path.URL);
 
         Menu menu = new Menu("Hotel Management System");
-        menu.addNewOption("Adding new hotel");
-        menu.addNewOption("Checking exists hotel");
-        menu.addNewOption("Updating Hotel information");
-        menu.addNewOption("Deleting Hotel");
-        menu.addNewOption("Searching Hotel");
-        menu.addNewOption("Display a hotel list");
-        menu.addNewOption("Save to file");
-        menu.addNewOption("Others Quit");
+        menu.addOption("Adding new hotel");
+        menu.addOption("Checking exists hotel");
+        menu.addOption("Updating Hotel information");
+        menu.addOption("Deleting Hotel");
+        menu.addOption("Searching Hotel");
+        menu.addOption("Display a hotel list");
+        menu.addOption("Save to file");
+        menu.addOption("Others Quit");
 
         int choice;
         do {
@@ -51,6 +51,6 @@ public class Main {
                     hm.quit();
                     break;
             }
-        } while (choice != 8);
+        } while (choice != menu.optionList.size());
     }
 }

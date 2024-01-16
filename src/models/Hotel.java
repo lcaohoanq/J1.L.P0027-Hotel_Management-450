@@ -6,7 +6,7 @@ public class Hotel implements Serializable {
 
     private String id;
     private String name;
-    private String roomAvailable;
+    private int roomAvailable;
     private String address;
     private String phone;
     private String rating;
@@ -14,7 +14,7 @@ public class Hotel implements Serializable {
     public Hotel() {
     }
 
-    public Hotel(String id, String name, String roomAvailable, String address, String phone, String rating) {
+    public Hotel(String id, String name, int roomAvailable, String address, String phone, String rating) {
         this.id = id.toUpperCase();
         this.name = name;
         this.roomAvailable = roomAvailable;
@@ -39,11 +39,11 @@ public class Hotel implements Serializable {
         this.name = name;
     }
 
-    public String getRoomAvailable() {
+    public int getRoomAvailable() {
         return roomAvailable;
     }
 
-    public void setRoomAvailable(String roomAvailable) {
+    public void setRoomAvailable(int roomAvailable) {
         this.roomAvailable = roomAvailable;
     }
 
@@ -72,7 +72,7 @@ public class Hotel implements Serializable {
     }
 
     public void showInfo() {
-        String str = String.format("|%3s|%15s|%5s|%70s|%15s|%10s|",
+        String str = String.format("|%3s|%15s|%15d|%70s|%15s|%10s|",
                 id, name, roomAvailable,
                 address,
                 phone, rating);
@@ -81,7 +81,7 @@ public class Hotel implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("|%3s|%15s|%2s|%70s|%15s|%10s|\n", id, name, roomAvailable,
+        return String.format("|%3s|%15s|%15d|%70s|%15s|%10s|\n", id, name, roomAvailable,
                 address,
                 phone, rating);
     }

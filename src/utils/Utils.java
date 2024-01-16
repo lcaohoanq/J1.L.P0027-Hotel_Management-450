@@ -88,7 +88,7 @@ public class Utils {
         while (true) {
             try {
                 int number = Integer.parseInt(sc.nextLine());
-                if (number < lowerBound | number > upperBound) {
+                if (number < lowerBound || number > upperBound) {
                     throw new Exception();
                 }
                 return number;
@@ -126,7 +126,7 @@ public class Utils {
         while (true) {
             try {
                 String str = sc.nextLine();
-                if (str.isEmpty() | !str.matches(regex)) {
+                if (str.isEmpty() || !str.matches(regex)) {
                     throw new Exception();
                 }
                 return str;

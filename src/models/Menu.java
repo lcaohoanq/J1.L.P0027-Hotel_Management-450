@@ -11,7 +11,7 @@ method print: in ra danh sách các menu
 method getChoice: lấy lựa chọn từ người dùng
 */
 public class Menu {
-    public static ArrayList<String> optionList = new ArrayList<>();
+    public ArrayList<String> optionList = new ArrayList<>();
     public String title;
 
     // constructor
@@ -20,14 +20,14 @@ public class Menu {
     }
 
     // method
-    public void addNewOption(String nOptional) {
-        optionList.add(nOptional);
+    public void addOption(String option) {
+        optionList.add(option);
     }
 
     // in ra menu
     public void print() {
         int count = 1;
-        System.out.println("-------------" + title + "--------------");
+        System.out.println("--------------------------------------------------------" + title + "--------------------------------------------------------");
         for (String item : optionList) {
             System.out.println(count + ". " + item);
             count++;

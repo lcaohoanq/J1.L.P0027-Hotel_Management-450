@@ -40,9 +40,7 @@ public class HotelManagement {
 
             String name = Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME,
                     Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_BE_LETTER);
-            String roomAvailable = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE,
-                    Regex.HOTEL_ROOM_AVAILABLE,
-                    Message.HOTEL_ROOM_AVAILABLE_IS_REQUIRED, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_NUMBER);
+            int roomAvailable = Utils.getInt(Message.INPUT_HOTEL_ROOM_AVAILABLE, 0);
             String address = StringTools.formatString(
                     Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED,
                             Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER));
@@ -57,6 +55,7 @@ public class HotelManagement {
                     rating);
             // add to userActionList
             userActionList.add(hotel);
+//            hotelList.add(hotel);
             System.out.println(Message.ADD_NEW_HOTEL_SUCCESSFULLY);
         } while (getUserChoice());
     }
@@ -80,18 +79,23 @@ public class HotelManagement {
     private ArrayList<Hotel> searchHotelListByAddress(String address) {
         searchList.clear(); // reset searchList
         // tìm trong hotelList
+        // Cần format lại chuỗi người dùng nhập vào
+        // string không có 2 khoảng trắng liên tiếp
         for (Hotel hotel : hotelList) {
-            if (hotel.getAddress().contains(address)) {
+            if (hotel.getAddress().toLowerCase().contains(StringTools.formatString(address).toLowerCase())) {
                 searchList.add(hotel);
             }
         }
-        Comparator<Hotel> orderByAddress = new Comparator<Hotel>() {
+        Comparator<Hotel> orderByRoomAvailable = new Comparator<Hotel>() {
             @Override
             public int compare(Hotel o1, Hotel o2) {
-                return o2.getAddress().compareTo(o1.getAddress()); // descending
+                if (o1.getRoomAvailable() > o2.getRoomAvailable()) {
+                    return -1;
+                }
+                return 1;
             }
         };
-        Collections.sort(searchList, orderByAddress);
+        Collections.sort(searchList, orderByRoomAvailable);
         return searchList;
     }
 
@@ -120,11 +124,11 @@ public class HotelManagement {
         } else {
             System.out.println("Before updating: ");
             hotel.showInfo();
-            
+
             // các field dữ liệu update có thể rỗng
             String name = Utils.getString(Message.INPUT_HOTEL_NAME);
             String roomAvailable = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE);
-            String address = Utils.getString(Message.INPUT_HOTEL_ADDRESS);
+            String address = StringTools.formatString(Utils.getString(Message.INPUT_HOTEL_ADDRESS));
             String phone = Utils.getString(Message.INPUT_HOTEL_PHONE);
             String rating = Utils.getString(Message.INPUT_HOTEL_RATING);
 
@@ -138,7 +142,7 @@ public class HotelManagement {
             if (roomAvailable.isEmpty()) {
                 hotel.setRoomAvailable(hotel.getRoomAvailable());
             } else {
-                hotel.setRoomAvailable(roomAvailable);
+                hotel.setRoomAvailable(Integer.parseInt(roomAvailable)); //mình cần nhập chuỗi để lấy rỗng, và trường của hotel là int phải ép lại int
             }
 
             if (address.isEmpty()) {
@@ -171,23 +175,33 @@ public class HotelManagement {
         // tìm vị trí của hotel cần xóa
         // tìm trong cái mảng gốc
         Hotel hotel = this.searchHotelByID(hotelList, id);
+        //trường hợp người dùng thêm 1 hotel mà chưa save file
+        //dữ liệu đang ở userActionList
+        //người dùng muốn xoá dữ liệu mới nhập thì không được, vì chưa lưu xuống file -> nhận null 
+
         if (hotel == null) {
             System.out.println(Message.DELETE_HOTEL_FAILED);
         } else {
+            //pass qua được ở trên thì dữ liệu chắc chắn có trong hotelList
+            //nếu dữ liệu có trong hotelList thì userActionList sẽ có luôn (clone)
+            //ta cần phải xoá ở cả 2 mảng, để trường hợp ghi file ra sẽ không bị xung đột giữa 2 mảng, 1 có 1 không
             hotel.showInfo();
             if (!getUserConfirmation()) {
                 return;
             }
             userActionList.remove(hotel);
+            hotelList.remove(hotel);
             System.out.println(Message.DELETE_HOTEL_SUCCESSFULLY);
         }
     }
 
     public void searchHotel() {
+        int choice;
         do {
             System.out.println(Message.SEARCH_HOTEL);
-            int choice = Utils.getInt(Message.SEARCH_HOTEL_OPTIONS_TITLE,
-                    Message.SEARCH_HOTEL_OPTIONS, 1, 2);
+            System.out.println(Message.SEARCH_OPTION_ID);
+            System.out.println(Message.SEARCH_OPTION_ADDRESS);
+            choice = Utils.getInt(Message.INPUT_YOUR_CHOICE, Message.SEARCH_HOTEL_MUST_IN_1_OR_2, 1, 2);
             switch (choice) {
                 // search by id
                 case 1:
@@ -207,8 +221,12 @@ public class HotelManagement {
                     if (searchList.isEmpty()) {
                         System.out.println(Message.HOTEL_ADDRESS_NOT_FOUND);
                     } else {
+                        StringTools.printLine();
+                        StringTools.printTitle();
+                        StringTools.printLine();
                         for (Hotel item : searchList) {
                             item.showInfo();
+                            StringTools.printLine();
                         }
                     }
                     break;
@@ -271,7 +289,6 @@ public class HotelManagement {
             // shallow copy, khi mà copy phần tử như này, nếu ta tác động đến phần tử trong
             // userActionList
             // thì phần tử trong hotelList cũng bị tác động theo
-            System.out.println(Message.READ_FILE_SUCCESS + url);
             return true;
         } catch (Exception e) {
             System.out.println(Message.READ_FILE_FAILED + e.getMessage());
@@ -292,6 +309,12 @@ public class HotelManagement {
             }
             out.close();
             fOut.close();
+
+            hotelList = (ArrayList<Hotel>) userActionList.clone();
+            //sau khi write file, thì nội dung file được cập nhật từ userActionList
+            //nhưng trong mảng hotelList vẫn chứa nội dung cũ
+            //xử lí bằng việc clone lại userActionList cho hotelList 
+
             System.out.println(Message.WRITE_FILE_SUCCESS + url);
             return true;
         } catch (IOException e) {
