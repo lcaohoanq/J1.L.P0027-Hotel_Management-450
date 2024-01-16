@@ -8,7 +8,6 @@ import java.util.Comparator;
 import constants.Message;
 import constants.Regex;
 import models.Hotel;
-import utils.ConsoleColors;
 import utils.Utils;
 import utils.StringTools;
 
@@ -115,10 +114,13 @@ public class HotelManagement {
         String id = Utils
                 .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
                         Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
-        Hotel hotel = this.searchHotelByID(userActionList, id);
+        Hotel hotel = this.searchHotelByID(userActionList, id);  //search trong userActionList đã clone hotelList về từ khi load file 
         if (hotel == null) {
             System.out.println(Message.HOTEL_DOES_NOT_EXIST);
         } else {
+            System.out.println("Before updating: ");
+            hotel.showInfo();
+            
             // các field dữ liệu update có thể rỗng
             String name = Utils.getString(Message.INPUT_HOTEL_NAME);
             String roomAvailable = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE);
@@ -226,18 +228,19 @@ public class HotelManagement {
             }
         };
         Collections.sort(hotelList, orderByName);
-        String str = String.format(
-                ConsoleColors.RED + "   %5s,%15s,%5s,%80s,%11s,   %10s" + ConsoleColors.RESET,
-                ConsoleColors.BLACK_BACKGROUND + "ID", "Name", "Room", "Address", "Phone",
-                "Rating" + ConsoleColors.RESET);
-        System.out.println(str);
+        StringTools.printLine();
+        StringTools.printTitle();
+        StringTools.printLine();
         for (Hotel item : hotelList) {
             item.showInfo();
+            StringTools.printLine();
         }
     }
 
     public boolean loadFromFile(String url) {
-        if (hotelList.size() > 0) {
+        //nếu mảng đang chứa dữ liệu thì phải xoá sạch dữ liêu trong mảng
+        //rồi mới load file
+        if (!hotelList.isEmpty()) {
             hotelList.clear();
         }
         try {
@@ -249,8 +252,7 @@ public class HotelManagement {
             ObjectInputStream fo = new ObjectInputStream(fi);
             Hotel hotel;
             try {
-                while (true) {
-                    hotel = (Hotel) fo.readObject();
+                while ((hotel = (Hotel) fo.readObject()) != null) {
                     hotelList.add(hotel);
                 }
             } catch (EOFException e) {
@@ -302,14 +304,18 @@ public class HotelManagement {
         System.exit(0);
     }
 
+    //chấp nhận người dùng chỉ nhập vào 4 kí tự y,Y,n,N và kết quả sẽ đem lowerCase 
+    //check equals với y => return true;
+    //                 n => return false; 
+    //sử dụng 2 hàm này trong do-while
     public boolean getUserChoice() {
-        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N)
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO)
                 .toLowerCase()
                 .equals("y");
     }
 
     public boolean getUserConfirmation() {
-        return Utils.getYesNo(Message.DO_YOU_WANT_TO_DELETE, Message.PLEASE_INPUT_Y_OR_N)
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_DELETE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO)
                 .toLowerCase()
                 .equals("y");
     }

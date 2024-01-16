@@ -1,6 +1,7 @@
 
 package utils;
 
+import constants.Regex;
 import java.util.Scanner;
 
 public class Utils {
@@ -30,7 +31,7 @@ public class Utils {
                 String str = sc.nextLine();
                 return str;
             } catch (Exception e) {
-                System.out.println(ConsoleColors.RED + "Error!" + ConsoleColors.RESET);
+                System.out.println("Input String!");
             }
         }
     }
@@ -92,7 +93,7 @@ public class Utils {
                 }
                 return number;
             } catch (Exception e) {
-                System.out.println(ConsoleColors.RED + errMsg + ConsoleColors.RESET);
+                System.out.println(errMsg);
             }
         }
     }
@@ -117,18 +118,20 @@ public class Utils {
         } while (check || number < min);
         return number;
     }
-
-    public static String getYesNo(String inpMsg, String errMsg) {
+    
+    //nhiệm vụ hàm này chỉ nhận vào chuỗi là y|Y|n|N tượng trưng cho option yes, no
+    //rồi trả ra chuỗi đó, xử lí thì ở bên HotelManagement
+    public static String getYesNo(String inpMsg, String errMsg, String regex) {
         System.out.println(inpMsg);
         while (true) {
             try {
                 String str = sc.nextLine();
-                if (str.isEmpty() | !str.matches("^[yYnN]$")) {
+                if (str.isEmpty() | !str.matches(regex)) {
                     throw new Exception();
                 }
                 return str;
             } catch (Exception e) {
-                System.out.println(ConsoleColors.RED + errMsg + ConsoleColors.RESET);
+                System.out.println(errMsg);
             }
         }
     }

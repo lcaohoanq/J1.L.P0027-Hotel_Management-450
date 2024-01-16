@@ -2,8 +2,6 @@ package models;
 
 import java.io.Serializable;
 
-import utils.ConsoleColors;
-
 public class Hotel implements Serializable {
 
     private String id;
@@ -74,7 +72,7 @@ public class Hotel implements Serializable {
     }
 
     public void showInfo() {
-        String str = String.format(ConsoleColors.GREEN + "%5s," + ConsoleColors.RESET + "%15s,%5s,%80s,%11s,%10s",
+        String str = String.format("|%3s|%15s|%5s|%70s|%15s|%10s|",
                 id, name, roomAvailable,
                 address,
                 phone, rating);
@@ -83,7 +81,7 @@ public class Hotel implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%5s-%15s-%2s-%80s-%11s-%10s\n", id, name, roomAvailable,
+        return String.format("|%3s|%15s|%2s|%70s|%15s|%10s|\n", id, name, roomAvailable,
                 address,
                 phone, rating);
     }
