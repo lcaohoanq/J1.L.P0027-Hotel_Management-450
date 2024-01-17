@@ -41,15 +41,15 @@ public class HotelManagement {
             String name = Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME,
                     Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_BE_LETTER);
             int roomAvailable = Utils.getInt(Message.INPUT_HOTEL_ROOM_AVAILABLE, 0);
-            String address = StringTools.formatString(
+            String address = StringTools.formatRedundantWhiteSpace(
                     Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED,
                             Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER));
             String phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.HOTEL_PHONE,
                     Message.HOTEL_PHONE_IS_REQUIRED,
                     Message.HOTEL_PHONE_MUST_BE_10_DIGITS); // check regex
-            String rating = Utils.getString(Message.INPUT_HOTEL_RATING, Regex.HOTEL_RATING,
+            String rating = StringTools.formatRating(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.HOTEL_RATING,
                     Message.HOTEL_RATING_IS_REQUIRED,
-                    Message.HOTEL_RATING_MUST_BE_NUMBER_AND_STAR);
+                    Message.HOTEL_RATING_MUST_BE_NUMBER_AND_STAR));
 
             Hotel hotel = new Hotel(id, name, roomAvailable, address, phone,
                     rating);
@@ -57,7 +57,7 @@ public class HotelManagement {
             userActionList.add(hotel);
 //            hotelList.add(hotel);
             System.out.println(Message.ADD_NEW_HOTEL_SUCCESSFULLY);
-        } while (getUserChoice());
+        } while (getUserConfirmation());
     }
 
     // search trong hotelList gốc
@@ -82,7 +82,7 @@ public class HotelManagement {
         // Cần format lại chuỗi người dùng nhập vào
         // string không có 2 khoảng trắng liên tiếp
         for (Hotel hotel : hotelList) {
-            if (hotel.getAddress().toLowerCase().contains(StringTools.formatString(address).toLowerCase())) {
+            if (hotel.getAddress().toLowerCase().contains(StringTools.formatRedundantWhiteSpace(address).toLowerCase())) {
                 searchList.add(hotel);
             }
         }
@@ -110,7 +110,7 @@ public class HotelManagement {
             } else {
                 System.out.println(Message.EXIST_HOTEL);
             }
-        } while (getUserChoice());
+        } while (getUserConfirmation());
     }
 
     // after updating, the program return to the main screen
@@ -128,9 +128,9 @@ public class HotelManagement {
             // các field dữ liệu update có thể rỗng
             String name = Utils.getString(Message.INPUT_HOTEL_NAME);
             String roomAvailable = Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE);
-            String address = StringTools.formatString(Utils.getString(Message.INPUT_HOTEL_ADDRESS));
+            String address = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_ADDRESS));
             String phone = Utils.getString(Message.INPUT_HOTEL_PHONE);
-            String rating = Utils.getString(Message.INPUT_HOTEL_RATING);
+            String rating = StringTools.formatRating(Utils.getString(Message.INPUT_HOTEL_RATING));
 
             // If new information is blank, then not change old information.
             if (name.isEmpty()) {
@@ -231,7 +231,7 @@ public class HotelManagement {
                     }
                     break;
             }
-        } while (getUserChoice());
+        } while (getUserConfirmation());
     }
 
     public void displayHotelList() {
@@ -331,15 +331,7 @@ public class HotelManagement {
     //check equals với y => return true;
     //                 n => return false; 
     //sử dụng 2 hàm này trong do-while
-    public boolean getUserChoice() {
-        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO)
-                .toLowerCase()
-                .equals("y");
-    }
-
     public boolean getUserConfirmation() {
-        return Utils.getYesNo(Message.DO_YOU_WANT_TO_DELETE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO)
-                .toLowerCase()
-                .equals("y");
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO).equalsIgnoreCase("y");
     }
 }

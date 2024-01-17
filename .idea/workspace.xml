@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45290460-647e-47dd-9947-29368b547c48" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/utils/Errors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/Regex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Regex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/HotelManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/HotelManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/StringTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/StringTools.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +30,7 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -42,15 +46,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -71,6 +73,7 @@
       <updated>1705368111342</updated>
       <workItem from="1705368113330" duration="183000" />
       <workItem from="1705368303134" duration="63000" />
+      <workItem from="1705495079686" duration="4136000" />
     </task>
     <servers />
   </component>
