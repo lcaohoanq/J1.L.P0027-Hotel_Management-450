@@ -76,7 +76,7 @@ public class HotelManagement {
         return pos == -1 ? null : hotel.get(pos);
     }
 
-    // yêu cầu đề thay đổi, search bằng name và sort desc theo hotel_address
+    // yêu cầu đề thay đổi, search bằng name và sort desc theo room available
     private ArrayList<Hotel> searchHotelListByAddress(String address) {
         searchList.clear(); // reset searchList
         // tìm trong hotelList

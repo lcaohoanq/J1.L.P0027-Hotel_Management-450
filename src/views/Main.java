@@ -49,7 +49,6 @@ public class Main {
                     break;
                 case 8:
                     hm.quit();
-                    break;
             }
         } while (choice != menu.optionList.size());
     }
