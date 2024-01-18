@@ -1,7 +1,6 @@
 
 package utils;
 
-import constants.Regex;
 import java.util.Scanner;
 
 public class Utils {
@@ -34,6 +33,24 @@ public class Utils {
                 System.out.println("Input String!");
             }
         }
+    }
+
+    // ép nhập chuỗi, có thể rỗng, bắt theo regex
+    public static String getString(String welcome, String pattern, String msgreg) {
+        boolean check = true;
+        String result = "";
+        do {
+            System.out.print(welcome);
+            result = sc.nextLine();
+            //nếu khác rỗng tức là có dữ liệu, thì phải match regex
+            //còn rỗng thì if sẽ bỏ qua, và check = false
+            if (!result.isEmpty() && !result.matches(pattern)) {
+                System.out.println(msgreg);
+            } else {
+                check = false;
+            }
+        } while (check);
+        return result;
     }
 
     public static String getString(String welcome, String pattern, String msg, String msgreg) {
@@ -69,7 +86,7 @@ public class Utils {
                 }
 
             } catch (Exception e) {
-                System.out.println("Input number!!!");
+                System.out.println("Input integer number!!!");
             }
         } while (check || number < min);
         return number;
@@ -113,7 +130,7 @@ public class Utils {
                 }
 
             } catch (Exception e) {
-                System.out.println("Input number!!!");
+                System.out.println("Input double number!!!");
             }
         } while (check || number < min);
         return number;

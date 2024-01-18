@@ -12,11 +12,12 @@ public class Message {
     public static final String INPUT_YOUR_CHOICE = "Input your choice: ";
 
     // Validation messages for hotel information
-    public static final String HOTEL_ID_MUST_BE_H_AND_2_DIGITS = "Hotel id must be in the format H01, H02, ...";
+    public static final String HOTEL_ID_MUST_BE_H_AND_2_DIGITS = "Hotel id must be in the format Hxx: H01, H02, ...";
     public static final String HOTEL_NAME_MUST_BE_LETTER = "Hotel name must consist of characters only";
+    public static final String HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER = "Hotel room available must be a positive number";
     public static final String HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER = "Hotel address must not contain special characters (except commas)";
     public static final String HOTEL_PHONE_MUST_BE_10_DIGITS = "Hotel phone must be 10 digits";
-    public static final String HOTEL_RATING_MUST_BE_NUMBER_AND_STAR = "Hotel rating must be in the format 1 star, 2 stars, ...";
+    public static final String HOTEL_RATING_MUST_BE_DIGIT_AND_STAR = "Hotel rating must be in the format digit + star[s]: 1 star, 2 stars, ...";
 
     //Validation message if null value
     public static final String HOTEL_ID_IS_REQUIRED = "Hotel id is required";
@@ -34,8 +35,6 @@ public class Message {
     public static final String NO_HOTEL_FOUND = "No Hotel Found!";
     public static final String HOTEL_DOES_NOT_EXIST = "Hotel does not exist";
     public static final String HOTEL_ID_IS_EXISTED = "Hotel id is existed";
-    public static final String HOTEL_NAME_IS_EXISTED = "Hotel name is existed";
-    public static final String HOTEL_NAME_IS_NOT_EXISTED = "Hotel name does not exist";
 
     // Operation 
     public static final String ADD_NEW_HOTEL_SUCCESSFULLY = "Add new hotel successfully";

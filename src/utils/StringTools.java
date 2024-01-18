@@ -13,7 +13,7 @@ public class StringTools {
     }
     public static String formatRating(String rating){
         String str = rating.trim();
-        if(rating.startsWith("1")){
+        if(rating.matches("^1\\sstars$")){
             str = "1 star";
         }else if(!rating.endsWith("s")){
             str = rating.concat("s");
