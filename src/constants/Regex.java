@@ -1,11 +1,10 @@
 package constants;
 
 public class Regex {
-    public static final String HOTEL_ID = "^[hH]\\d{2}$"; // H01, H02, H03, ...
-    public static final String HOTEL_NAME = "^[a-zA-Z\\s]+$"; // name
-    public static final String HOTEL_ADDRESS = "^[a-zA-Z0-9,\\s]+$"; // address:
-    public static final String HOTEL_ROOM_AVAILABLE = "^\\d+$"; // number >= 0
-    public static final String HOTEL_PHONE = "^\\d{10}$"; // phone: 10 digits
-    public static final String HOTEL_RATING = "^\\d+\\sstar[s]?$"; // 1 star, 2 star[s], 3 star[s], ...
-    public static final String OPTIONS_YES_NO = "^[yYnN]$"; //y,Y,n,N
+    public static final String ID = "^[hH]\\d{2}$"; // H01, H02, H03, ...
+    public static final String NAME = "^[a-zA-Z]+[a-zA-Z0-9\\s]*$"; // name: start with letter, can contain number, space
+    public static final String ROOM = "^[0-9]+$"; // number: start without 0,
+    public static final String ADDRESS = "^[a-zA-Z0-9]+[a-zA-Z0-9,\\s]*$"; // address: start with letter or number, can contain comma,number,space
+    public static final String PHONE = "^0\\d{9}$"; // phone: 10 digits must start with 0
+    public static final String YES_NO = "^[yYnN]$"; //y,Y,n,N
 }

@@ -27,10 +27,10 @@ public class HotelManagement {
             do {
                 isExisted = false; // reset isExisted
                 id = Utils
-                        .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                        .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
                                 Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS)
                         .toUpperCase();
-                for (Hotel hotel : userActionList) {
+                for (Hotel hotel : hotelList) {
                     if (hotel.getId().equals(id)) {
                         isExisted = true;
                         System.out.println(Message.HOTEL_ID_IS_EXISTED + "\n" + Message.ADD_NEW_HOTEL_FAILED);
@@ -39,24 +39,16 @@ public class HotelManagement {
                 }
             } while (isExisted);
 
-            String name = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME,
-                    Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_BE_LETTER));
-            int roomAvailable = Utils.getInt(Message.INPUT_HOTEL_ROOM_AVAILABLE, 0);
-            String address = StringTools.formatRedundantWhiteSpace(
-                    Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED,
-                            Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER));
-            String phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.HOTEL_PHONE,
-                    Message.HOTEL_PHONE_IS_REQUIRED,
-                    Message.HOTEL_PHONE_MUST_BE_10_DIGITS); // check regex
-            String rating = StringTools.formatRating(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.HOTEL_RATING,
-                    Message.HOTEL_RATING_IS_REQUIRED,
-                    Message.HOTEL_RATING_MUST_BE_DIGIT_AND_STAR));
-
-            Hotel hotel = new Hotel(id, name, roomAvailable, address, phone,
+            String name = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_NAME, Regex.NAME, Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_START_WITH_LETTER));
+            String room = StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE, Regex.ROOM,Message.HOTEL_ROOM_AVAILABLE_IS_REQUIRED, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER));
+            String address = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED, Message.HOTEL_ADDRESS_MUST_SEPARATE_BY_COMMA));
+            String phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.PHONE, Message.HOTEL_PHONE_IS_REQUIRED, Message.HOTEL_PHONE_MUST_START_WITH_0_AND_FOLLOW_9_DIGIT);
+            String rating = StringTools.formatRating(StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.ROOM, Message.HOTEL_RATING_IS_REQUIRED, Message.HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER)));
+            
+            Hotel hotel = new Hotel(id, name, room, address, phone,
                     rating);
             // add to userActionList
             userActionList.add(hotel);
-//            hotelList.add(hotel);
             System.out.println(Message.ADD_NEW_HOTEL_SUCCESSFULLY);
         } while (getUserConfirmation());
     }
@@ -77,23 +69,23 @@ public class HotelManagement {
     }
 
     // yêu cầu đề thay đổi, search bằng name và sort desc theo room available
-    private ArrayList<Hotel> searchHotelListByAddress(String address) {
+    private ArrayList<Hotel> searchHotelListByAddress(ArrayList<Hotel> list, String address) {
         searchList.clear(); // reset searchList
         // tìm trong hotelList
         // Cần format lại chuỗi người dùng nhập vào
         // string không có 2 khoảng trắng liên tiếp
-        for (Hotel hotel : hotelList) {
-            if (hotel.getAddress().toLowerCase().contains(StringTools.formatRedundantWhiteSpace(address).toLowerCase())) {
+        for (Hotel hotel : list) {
+            if (hotel.getAddress().toLowerCase().contains(StringTools.removeTwoSpace(address).toLowerCase())) {
                 searchList.add(hotel);
             }
         }
         Comparator<Hotel> orderByRoomAvailable = new Comparator<Hotel>() {
             @Override
             public int compare(Hotel o1, Hotel o2) {
-                if (o1.getRoomAvailable() > o2.getRoomAvailable()) {
-                    return -1;
+                if(Integer.parseInt(o2.getRoomAvailable()) > Integer.parseInt(o1.getRoomAvailable())){
+                    return 1;
                 }
-                return 1;
+                return -1;
             }
         };
         Collections.sort(searchList, orderByRoomAvailable);
@@ -103,7 +95,7 @@ public class HotelManagement {
     public void checkExistsHotel() {
         do {
             String id = Utils
-                    .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                    .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
                             Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
             Hotel hotel = this.searchHotelByID(hotelList, id); // search trong hotelList gốc
             if (hotel == null) {
@@ -117,9 +109,11 @@ public class HotelManagement {
     // after updating, the program return to the main screen
     public void updateHotel() {
         String id = Utils
-                .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
                         Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS);
-        Hotel hotel = this.searchHotelByID(userActionList, id);  //search trong userActionList đã clone hotelList về từ khi load file 
+
+        Hotel hotel = this.searchHotelByID(userActionList, id);
+        int index = this.searchHotelIndexId(userActionList, id);
         if (hotel == null) {
             System.out.println(Message.HOTEL_DOES_NOT_EXIST);
         } else {
@@ -129,44 +123,34 @@ public class HotelManagement {
             // các field dữ liệu update có thể rỗng, đề không nói constraint,
             // các field có thể rỗng nhưng nếu nhập phải theo regex
             //chỉ xử lí các trường hợp tiêu biểu: dư khoảng trắng, xử lí rating sai grammar, bọc regex lại nhưng vẫn cho nhập rỗng
-            String name = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_NAME, Regex.HOTEL_NAME, Message.HOTEL_NAME_MUST_BE_LETTER));
-            String roomAvailable = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE, Regex.HOTEL_ROOM_AVAILABLE, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER));
-            String address = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.HOTEL_ADDRESS, Message.HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER));
-            String phone = StringTools.formatRedundantWhiteSpace(Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.HOTEL_PHONE, Message.HOTEL_PHONE_MUST_BE_10_DIGITS));
-            String rating = StringTools.formatRedundantWhiteSpace(StringTools.formatRating(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.HOTEL_RATING, Message.HOTEL_RATING_MUST_BE_DIGIT_AND_STAR)));
+            String name = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_NAME, Regex.NAME, Message.HOTEL_NAME_MUST_START_WITH_LETTER));
+            String room = StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE, Regex.ROOM, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER));
+            String address = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.ADDRESS, Message.HOTEL_ADDRESS_MUST_SEPARATE_BY_COMMA));
+            String phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.PHONE, Message.HOTEL_PHONE_MUST_START_WITH_0_AND_FOLLOW_9_DIGIT);
+            String rating = StringTools.formatRating(StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.ROOM, Message.HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER)));
 
-            // If new information is blank, then not change old information.
-            if (name.isEmpty()) {
-                hotel.setName(hotel.getName());
-            } else {
-                hotel.setName(name);
+            if(name.isEmpty()) {
+                name = hotel.getName();
+            }
+            if(room.isEmpty()) {
+                room = hotel.getRoomAvailable();
+            }
+            if(address.isEmpty()) {
+                address = hotel.getAddress();
+            }
+            if(phone.isEmpty()) {
+                phone = hotel.getPhone();
+            }
+            if(rating.isEmpty()) {
+                rating = hotel.getRating();
             }
 
-            if (roomAvailable.isEmpty()) {
-                hotel.setRoomAvailable(hotel.getRoomAvailable());
-            } else {
-                hotel.setRoomAvailable(Integer.parseInt(roomAvailable)); //cần nhập chuỗi để lấy rỗng, và trường của hotel là int phải set lại int
-            }
+            Hotel newHotel = new Hotel(id, name, room, address, phone, rating);
 
-            if (address.isEmpty()) {
-                hotel.setAddress(hotel.getAddress());
-            } else {
-                hotel.setAddress(address);
-            }
+            userActionList.set(index, newHotel);
 
-            if (phone.isEmpty()) {
-                hotel.setPhone(hotel.getPhone());
-            } else {
-                hotel.setPhone(phone);
-            }
-
-            if (rating.isEmpty()) {
-                hotel.setRating(hotel.getRating());
-            } else {
-                hotel.setRating(rating);
-            }
             System.out.println("After updating: ");
-            hotel.showInfo();
+            newHotel.showInfo();
             System.out.println(Message.UPDATE_HOTEL_SUCCESSFULLY);
         }
     }
@@ -174,11 +158,11 @@ public class HotelManagement {
     // after deleting, the program return to the main screen
     public void deleteHotel() {
         String id = Utils
-                .getString(Message.INPUT_HOTEL_ID, Regex.HOTEL_ID, Message.HOTEL_ID_IS_REQUIRED,
+                .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
                         Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS).toUpperCase();
         // tìm vị trí của hotel cần xóa
         // tìm trong cái mảng gốc
-        Hotel hotel = this.searchHotelByID(hotelList, id);
+        Hotel hotel = this.searchHotelByID(userActionList, id);
         //trường hợp người dùng thêm 1 hotel mà chưa save file
         //dữ liệu đang ở userActionList
         //người dùng muốn xoá dữ liệu mới nhập thì không được, vì chưa lưu xuống file -> nhận null 
@@ -194,7 +178,6 @@ public class HotelManagement {
                 return;
             }
             userActionList.remove(hotel);
-            hotelList.remove(hotel);
             System.out.println(Message.DELETE_HOTEL_SUCCESSFULLY);
         }
     }
@@ -210,7 +193,7 @@ public class HotelManagement {
                 // search by id
                 case 1:
                     String id = Utils.getString(Message.INPUT_HOTEL_ID, Message.HOTEL_NAME_IS_REQUIRED);
-                    Hotel hotel = this.searchHotelByID(hotelList, id);
+                    Hotel hotel = this.searchHotelByID(userActionList, id);
                     if (hotel != null) {
                         hotel.showInfo();
                     } else {
@@ -221,7 +204,7 @@ public class HotelManagement {
                 // search by name
                 case 2:
                     String address = Utils.getString(Message.INPUT_HOTEL_ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED);
-                    searchList = this.searchHotelListByAddress(address);
+                    searchList = this.searchHotelListByAddress(userActionList,address);
                     if (searchList.isEmpty()) {
                         System.out.println(Message.HOTEL_ADDRESS_NOT_FOUND);
                     } else {
@@ -286,13 +269,18 @@ public class HotelManagement {
             // dùng deepcopy, khi đó khi ta tác động đến phần tử trong
             // userActionList
             // thì phần tử trong hotelList không bị tác động theo
-            userActionList = (ArrayList<Hotel>) hotelList.clone();
+//            userActionList = (ArrayList<Hotel>) hotelList.clone();
 
             // userActionList = new ArrayList<>(hotelList); // copy hotelList to
             // userActionList when load from file
             // shallow copy, khi mà copy phần tử như này, nếu ta tác động đến phần tử trong
             // userActionList
             // thì phần tử trong hotelList cũng bị tác động theo
+            userActionList.clear();
+            for(Hotel item: hotelList){
+                userActionList.add(item);
+            }
+            
         } catch (Exception e) {
             System.out.println(Message.READ_FILE_FAILED + e.getMessage());
         }
@@ -311,15 +299,20 @@ public class HotelManagement {
             }
             out.close();
             fOut.close();
+            
+            hotelList.clear();
+            for(Hotel item: userActionList){
+                hotelList.add(item);
+            }
 
-            hotelList = (ArrayList<Hotel>) userActionList.clone();
+//            hotelList = (ArrayList<Hotel>) userActionList.clone();
             //sau khi write file, thì nội dung file được cập nhật từ userActionList
             //nhưng trong mảng hotelList vẫn chứa nội dung cũ
             //xử lí bằng việc clone lại userActionList cho hotelList 
 
-            System.out.println(Message.WRITE_FILE_SUCCESS + url);
+            System.out.println(Message.SAVE_FILE_SUCCESS + url);
         } catch (IOException e) {
-            System.out.println(Message.WRITE_FILE_FAILED + e.getMessage());
+            System.out.println(Message.SAVE_FILE_FAILED + e.getMessage());
         }
     }
 
@@ -332,6 +325,6 @@ public class HotelManagement {
     //                 n => return false; 
     //sử dụng 2 hàm này trong do-while
     public boolean getUserConfirmation() {
-        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.OPTIONS_YES_NO).equalsIgnoreCase("y");
+        return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.YES_NO).equalsIgnoreCase("y");
     }
 }

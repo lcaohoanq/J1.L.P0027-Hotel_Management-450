@@ -13,15 +13,16 @@ public class Message {
 
     // Validation messages for hotel information
     public static final String HOTEL_ID_MUST_BE_H_AND_2_DIGITS = "Hotel id must be in the format Hxx: H01, H02, ...";
-    public static final String HOTEL_NAME_MUST_BE_LETTER = "Hotel name must consist of characters only";
+    public static final String HOTEL_NAME_MUST_START_WITH_LETTER = "Hotel name must start with a letter";
     public static final String HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER = "Hotel room available must be a positive number";
-    public static final String HOTEL_ADDRESS_MUST_NOT_CONTAIN_SPECIAL_CHARACTER = "Hotel address must not contain special characters (except commas)";
-    public static final String HOTEL_PHONE_MUST_BE_10_DIGITS = "Hotel phone must be 10 digits";
-    public static final String HOTEL_RATING_MUST_BE_DIGIT_AND_STAR = "Hotel rating must be in the format digit + star[s]: 1 star, 2 stars, ...";
+    public static final String HOTEL_ADDRESS_MUST_SEPARATE_BY_COMMA = "Hotel address must start with a letter or number and separated by comma";
+    public static final String HOTEL_PHONE_MUST_START_WITH_0_AND_FOLLOW_9_DIGIT = "Hotel phone must start with 0 and follow 9 digits";
+    public static final String HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER = "Hotel rating must be a positive number";
 
     //Validation message if null value
     public static final String HOTEL_ID_IS_REQUIRED = "Hotel id is required";
     public static final String HOTEL_NAME_IS_REQUIRED = "Hotel name is required";
+    public static final String HOTEL_ROOM_AVAILABLE_IS_REQUIRED = "Hotel room available is required";
     public static final String HOTEL_ADDRESS_IS_REQUIRED = "Hotel address is required";
     public static final String HOTEL_PHONE_IS_REQUIRED = "Hotel phone is required";
     public static final String HOTEL_RATING_IS_REQUIRED = "Hotel rating is required";
@@ -51,8 +52,8 @@ public class Message {
 
     // File
     public static final String READ_FILE_FAILED = "Read file failed ";
-    public static final String WRITE_FILE_SUCCESS = "Write file success ";
-    public static final String WRITE_FILE_FAILED = "Write file failed ";
+    public static final String SAVE_FILE_SUCCESS = "Write file success ";
+    public static final String SAVE_FILE_FAILED = "Write file failed ";
 
     // User confirmation prompts
     public static final String DO_YOU_WANT_TO_CONTINUE = "Do you want to continue? (y/n): ";

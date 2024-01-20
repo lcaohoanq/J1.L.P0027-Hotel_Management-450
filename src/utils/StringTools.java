@@ -4,21 +4,26 @@ public class StringTools {
 
     //khi chuỗi có 2 khoảng trắng thừa thì sẽ xử lí còn 1
     //chưa bọc hết trường hợp có thể có
-    public static String formatRedundantWhiteSpace(String inp) {
+    public static String removeTwoSpace(String inp) {
         inp = inp.trim();
-        while (inp.contains("  ")) {
-            inp = inp.replaceAll("\\s\\s", " ");
-        }
-        return inp;
+        return inp.replaceAll("\\s+", " ");
     }
-    public static String formatRating(String rating){
-        String str = rating.trim();
-        if(rating.matches("^1\\sstars$")){
-            str = "1 star";
-        }else if(!rating.endsWith("s")){
-            str = rating.concat("s");
+
+    public static String formatRating(String rating) {
+        if(rating.isEmpty()) return "";
+        return rating.matches("^[01]$") ? rating.concat(" star") : rating.concat(" stars");
+    }
+
+    //format 001 -> 1, 010 -> 10, but keep 0
+    public static String formatNum(String num) {
+        if(num.equalsIgnoreCase("0")) return num;
+        if(num.isEmpty()) return "";
+        else{
+            while (num.charAt(0) == '0' && num.length() > 1){
+                num = num.substring(1);
+            }
         }
-        return str;
+        return num;
     }
 
     public static void printTitle() {
@@ -28,5 +33,10 @@ public class StringTools {
 
     public static void printLine() {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static void main(String[] args) {
+        String str = Utils.getString("nhap chuoi");
+        System.out.println(formatNum(str));
     }
 }

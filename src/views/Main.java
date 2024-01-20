@@ -12,11 +12,11 @@ public class Main {
         hm.loadFromFile(Path.URL);
 
         Menu menu = new Menu("Hotel Management System");
-        menu.addOption("Adding new hotel");
-        menu.addOption("Checking exists hotel");
-        menu.addOption("Updating Hotel information");
-        menu.addOption("Deleting Hotel");
-        menu.addOption("Searching Hotel");
+        menu.addOption("Add new hotel");
+        menu.addOption("Check exists hotel");
+        menu.addOption("Update Hotel information");
+        menu.addOption("Delete Hotel");
+        menu.addOption("Search Hotel");
         menu.addOption("Display a hotel list");
         menu.addOption("Save to file");
         menu.addOption("Others Quit");
