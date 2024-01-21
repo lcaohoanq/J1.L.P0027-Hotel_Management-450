@@ -3,21 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="45290460-647e-47dd-9947-29368b547c48" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/constants/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/constants/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/controllers/HotelManagement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/data/Hotel.dat" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/data/Hotel.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/models/Hotel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/models/Hotel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/utils/StringTools.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/utils/StringTools.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/HotelManagement/views/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/HotelManagement/views/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/Regex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Regex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/HotelManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/HotelManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/Hotel.dat" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/Hotel.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/StringTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/StringTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +23,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
   </component>
   <component name="ProjectId" id="2b128hPrFyJKp24ypXA0gODdpCS" />
   <component name="ProjectViewState">
@@ -81,19 +73,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -117,6 +96,9 @@
       <workItem from="1705584497828" duration="6000" />
       <workItem from="1705731848147" duration="6237000" />
       <workItem from="1705750183630" duration="11007000" />
+      <workItem from="1705762998074" duration="52000" />
+      <workItem from="1705768052563" duration="306000" />
+      <workItem from="1705797275872" duration="1156000" />
     </task>
     <servers />
   </component>
@@ -130,22 +112,6 @@
           <url>file://$PROJECT_DIR$/src/views/Main.java</url>
           <line>29</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/controllers/HotelManagement.java</url>
-          <line>22</line>
-          <properties class="controllers.HotelManagement" method="addNewHotel">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/utils/Utils.java</url>
-          <line>55</line>
-          <properties class="utils.Utils" method="getString">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

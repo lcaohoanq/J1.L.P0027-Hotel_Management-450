@@ -3,7 +3,6 @@ package utils;
 public class StringTools {
 
     //khi chuỗi có 2 khoảng trắng thừa thì sẽ xử lí còn 1
-    //chưa bọc hết trường hợp có thể có
     public static String removeTwoSpace(String inp) {
         inp = inp.trim();
         return inp.replaceAll("\\s+", " ");
@@ -16,7 +15,7 @@ public class StringTools {
 
     //format 001 -> 1, 010 -> 10, but keep 0
     public static String formatNum(String num) {
-        if(num.equalsIgnoreCase("0")) return num;
+        if(num.equals("0")) return num;
         if(num.isEmpty()) return "";
         else{
             while (num.charAt(0) == '0' && num.length() > 1){
@@ -33,10 +32,5 @@ public class StringTools {
 
     public static void printLine() {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
-    }
-
-    public static void main(String[] args) {
-        String str = Utils.getString("nhap chuoi");
-        System.out.println(formatNum(str));
     }
 }

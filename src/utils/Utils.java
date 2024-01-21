@@ -136,8 +136,8 @@ public class Utils {
         return number;
     }
     
-    //nhiệm vụ hàm này chỉ nhận vào chuỗi là y|Y|n|N tượng trưng cho option yes, no
-    //rồi trả ra chuỗi đó, xử lí thì ở bên HotelManagement
+    //nhận vào chuỗi y|Y|n|N
+    //trả ra chuỗi đó, xử lí thì ở bên HotelManagement
     public static String getYesNo(String inpMsg, String errMsg, String regex) {
         System.out.println(inpMsg);
         while (true) {

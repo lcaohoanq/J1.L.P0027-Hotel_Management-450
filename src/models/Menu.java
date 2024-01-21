@@ -36,7 +36,6 @@ public class Menu {
 
     // lấy ra lựa chọn
     public int getChoice() {
-        int choice = Utils.getInt("Input your choice: ","Required between 1 and " + optionList.size(),1, optionList.size());
-        return choice;
+        return Utils.getInt("Input your choice: ","Required between 1 and " + optionList.size(),1, optionList.size());
     }
 }

@@ -20,6 +20,7 @@ public class HotelManagement {
 
     private ArrayList<Hotel> searchList = new ArrayList<>();
 
+    //Function 2: Add new hotel
     public void addNewHotel() {
         boolean isExisted;
         String id;
@@ -53,45 +54,7 @@ public class HotelManagement {
         } while (getUserConfirmation());
     }
 
-    // search trong hotelList gốc
-    private int searchHotelIndexId(ArrayList<Hotel> hotel, String keyId) {
-        for (int i = 0; i < hotel.size(); i++) {
-            if (hotel.get(i).getId().equals(keyId)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private Hotel searchHotelByID(ArrayList<Hotel> hotel, String keyId) {
-        int pos = this.searchHotelIndexId(hotel, keyId);
-        return pos == -1 ? null : hotel.get(pos);
-    }
-
-    // yêu cầu đề thay đổi, search bằng name và sort desc theo room available
-    private ArrayList<Hotel> searchHotelListByAddress(ArrayList<Hotel> list, String address) {
-        searchList.clear(); // reset searchList
-        // tìm trong hotelList
-        // Cần format lại chuỗi người dùng nhập vào
-        // string không có 2 khoảng trắng liên tiếp
-        for (Hotel hotel : list) {
-            if (hotel.getAddress().toLowerCase().contains(StringTools.removeTwoSpace(address).toLowerCase())) {
-                searchList.add(hotel);
-            }
-        }
-        Comparator<Hotel> orderByRoomAvailable = new Comparator<Hotel>() {
-            @Override
-            public int compare(Hotel o1, Hotel o2) {
-                if(Integer.parseInt(o2.getRoomAvailable()) > Integer.parseInt(o1.getRoomAvailable())){
-                    return 1;
-                }
-                return -1;
-            }
-        };
-        Collections.sort(searchList, orderByRoomAvailable);
-        return searchList;
-    }
-
+    //Function 3: Check hotel existed
     public void checkExistsHotel() {
         do {
             String id = Utils
@@ -106,7 +69,7 @@ public class HotelManagement {
         } while (getUserConfirmation());
     }
 
-    // after updating, the program return to the main screen
+    //Function 4: Update hotel
     public void updateHotel() {
         String id = Utils
                 .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
@@ -155,7 +118,7 @@ public class HotelManagement {
         }
     }
 
-    // after deleting, the program return to the main screen
+    //Function 5: Delete hotel
     public void deleteHotel() {
         String id = Utils
                 .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
@@ -182,6 +145,7 @@ public class HotelManagement {
         }
     }
 
+    //Function 6: Search hotel
     public void searchHotel() {
         int choice;
         do {
@@ -221,6 +185,7 @@ public class HotelManagement {
         } while (getUserConfirmation());
     }
 
+    //Function 7: Display hotel and sort by name
     public void displayHotelList() {
         if (hotelList.isEmpty()) {
             System.out.println(Message.NO_HOTEL_FOUND);
@@ -232,7 +197,7 @@ public class HotelManagement {
                 return o2.getName().toLowerCase().compareTo(o1.getName().toLowerCase());
             }
         };
-        Collections.sort(hotelList, orderByName);
+        hotelList.sort(orderByName);
         StringTools.printLine();
         StringTools.printTitle();
         StringTools.printLine();
@@ -242,6 +207,7 @@ public class HotelManagement {
         }
     }
 
+    //Function 8: Save hotel list to file
     public void loadFromFile(String url) {
         //nếu mảng đang chứa dữ liệu thì phải xoá sạch dữ liêu trong mảng
         //rồi mới load file
@@ -277,15 +243,14 @@ public class HotelManagement {
             // userActionList
             // thì phần tử trong hotelList cũng bị tác động theo
             userActionList.clear();
-            for(Hotel item: hotelList){
-                userActionList.add(item);
-            }
+            userActionList.addAll(hotelList);
             
         } catch (Exception e) {
             System.out.println(Message.READ_FILE_FAILED + e.getMessage());
         }
     }
 
+    //Function 8: Load hotel list from file
     public void saveToFile(String url) {
         if (hotelList.isEmpty()) {
             System.out.println(Message.NO_HOTEL_FOUND);
@@ -301,14 +266,7 @@ public class HotelManagement {
             fOut.close();
             
             hotelList.clear();
-            for(Hotel item: userActionList){
-                hotelList.add(item);
-            }
-
-//            hotelList = (ArrayList<Hotel>) userActionList.clone();
-            //sau khi write file, thì nội dung file được cập nhật từ userActionList
-            //nhưng trong mảng hotelList vẫn chứa nội dung cũ
-            //xử lí bằng việc clone lại userActionList cho hotelList 
+            hotelList.addAll(userActionList);
 
             System.out.println(Message.SAVE_FILE_SUCCESS + url);
         } catch (IOException e) {
@@ -316,15 +274,54 @@ public class HotelManagement {
         }
     }
 
+    //Function 9: Quit program
     public void quit() {
         System.exit(0);
     }
 
-    //chấp nhận người dùng chỉ nhập vào 4 kí tự y,Y,n,N và kết quả sẽ đem lowerCase 
+    private int searchHotelIndexId(ArrayList<Hotel> hotel, String keyId) {
+        for (int i = 0; i < hotel.size(); i++) {
+            if (hotel.get(i).getId().equals(keyId)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private Hotel searchHotelByID(ArrayList<Hotel> hotel, String keyId) {
+        int pos = this.searchHotelIndexId(hotel, keyId);
+        return pos == -1 ? null : hotel.get(pos);
+    }
+
+    // search by name and sort desc by room available
+    private ArrayList<Hotel> searchHotelListByAddress(ArrayList<Hotel> list, String address) {
+        searchList.clear(); // reset searchList
+        // tìm trong hotelList
+        // Cần format lại chuỗi người dùng nhập vào
+        // string không có 2 khoảng trắng liên tiếp
+        for (Hotel hotel : list) {
+            if (hotel.getAddress().toLowerCase().contains(StringTools.removeTwoSpace(address).toLowerCase())) {
+                searchList.add(hotel);
+            }
+        }
+        Comparator<Hotel> orderByRoomAvailable = new Comparator<Hotel>() {
+            @Override
+            public int compare(Hotel o1, Hotel o2) {
+                if(Integer.parseInt(o2.getRoomAvailable()) > Integer.parseInt(o1.getRoomAvailable())){
+                    return 1;
+                }
+                return -1;
+            }
+        };
+        searchList.sort(orderByRoomAvailable);
+        return searchList;
+    }
+
+    //chấp nhận người dùng chỉ nhập vào 4 kí tự y,Y,n,N và kết quả sẽ đem lowerCase
     //check equals với y => return true;
     //                 n => return false; 
     //sử dụng 2 hàm này trong do-while
-    public boolean getUserConfirmation() {
+    private boolean getUserConfirmation() {
         return Utils.getYesNo(Message.DO_YOU_WANT_TO_CONTINUE, Message.PLEASE_INPUT_Y_OR_N, Regex.YES_NO).equalsIgnoreCase("y");
     }
 }
