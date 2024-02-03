@@ -9,16 +9,16 @@ public class Main {
 
         HotelManagement hm = new HotelManagement();
 
-        hm.loadFromFile(Path.URL);
+        Menu menu = new Menu("The Hotel Management - Read and Write File");
 
-        Menu menu = new Menu("Hotel Management System");
-        menu.addOption("Add new hotel");
-        menu.addOption("Check exists hotel");
-        menu.addOption("Update Hotel information");
-        menu.addOption("Delete Hotel");
-        menu.addOption("Search Hotel");
-        menu.addOption("Display a hotel list");
-        menu.addOption("Save to file");
+        menu.addOption("Load data from file to program");
+        menu.addOption("Adding new hotel");
+        menu.addOption("Checking exists hotel");
+        menu.addOption("Updating Hotel information");
+        menu.addOption("Deleting Hotel");
+        menu.addOption("Searching Hotel");
+        menu.addOption("Displaying a hotel list (descending by Hotel_Name)");
+        menu.addOption("Save data to file");
         menu.addOption("Others Quit");
 
         int choice;
@@ -27,28 +27,31 @@ public class Main {
             choice = menu.getChoice();
             switch (choice) {
                 case 1:
-                    hm.addNewHotel();
+                    hm.loadDataFromFile(Path.URL);
                     break;
                 case 2:
-                    hm.checkExistsHotel();
+                    hm.addNewHotel();
                     break;
                 case 3:
-                    hm.updateHotel();
+                    hm.checkToExistsHotel();
                     break;
                 case 4:
-                    hm.deleteHotel();
+                    hm.updateHotelInformation();
                     break;
                 case 5:
-                    hm.searchHotel();
+                    hm.deleteHotel();
                     break;
                 case 6:
-                    hm.displayHotelList();
+                    hm.searchHotel();
                     break;
                 case 7:
-                    hm.saveToFile(Path.URL);
+                    hm.displayHotelList();
                     break;
                 case 8:
-                    hm.quit();
+                    hm.saveToFile(Path.URL);
+                    break;
+                case 9:
+                    hm.quit("Thank you for using our program!");
             }
         } while (choice != menu.optionList.size());
     }
