@@ -27,7 +27,7 @@ public class Menu {
     // in ra menu
     public void print() {
         int count = 1;
-        System.out.println("--------------------------------------------------------" + title + "--------------------------------------------------------");
+        System.out.println("----------------------------------------------" + title + "-----------------------------------------------");
         for (String item : optionList) {
             System.out.println(count + ". " + item);
             count++;
