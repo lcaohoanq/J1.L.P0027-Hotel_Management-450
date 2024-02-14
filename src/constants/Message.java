@@ -26,6 +26,8 @@ public class Message {
     public static final String HOTEL_ADDRESS_IS_REQUIRED = "Hotel address is required";
     public static final String HOTEL_PHONE_IS_REQUIRED = "Hotel phone is required";
     public static final String HOTEL_RATING_IS_REQUIRED = "Hotel rating is required";
+    public static final String OPTIONS_IS_REQUIRED = "Options is required";
+
     //Update hotel
     public static final String INPUT_NEW_HOTEL_NAME_OR_BLANK = "Input new hotel name or a blank to keep the old value           : ";
     public static final String INPUT_NEW_HOTEL_ROOM_AVAILABLE_OR_BLANK = "Input new hotel room available or a blank to keep the old value : ";
@@ -54,12 +56,6 @@ public class Message {
     public static final String UPDATE_HOTEL_FAILED = "Update hotel failed";
     public static final String DELETE_HOTEL_SUCCESSFULLY = "Delete hotel successfully";
     public static final String DELETE_HOTEL_FAILED = "Delete hotel failed";
-
-    // Search sub-menu
-    public static final String SEARCH_HOTEL = "-------------Search Hotel--------------";
-    public static final String SEARCH_HOTEL_MUST_IN_1_OR_2 = "Please input 1,2";
-    public static final String SEARCH_OPTION_ID = "1.Search hotel by id";
-    public static final String SEARCH_OPTION_ADDRESS = "2.Search hotel by address";
 
     // File
     public static final String READ_FILE_SUCCESS = "Read file success ";

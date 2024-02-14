@@ -1,6 +1,9 @@
 
 package utils;
 
+import constants.Message;
+import constants.Regex;
+
 import java.util.Scanner;
 
 public class Utils {
@@ -101,7 +104,7 @@ public class Utils {
             upperBound = tmp;
         }
 
-        System.out.println(inpMsg);
+        System.out.print(inpMsg);
         while (true) {
             try {
                 int number = Integer.parseInt(sc.nextLine());
@@ -114,22 +117,12 @@ public class Utils {
             }
         }
     }
-    
-    //nhận vào chuỗi y|Y|n|N
-    //trả ra chuỗi đó, xử lí thì ở bên HotelManagement
-    public static String getYesNo(String inpMsg, String errMsg, String regex) {
-        System.out.println(inpMsg);
-        while (true) {
-            try {
-                String str = sc.nextLine();
-                if (str.isEmpty() || !str.matches(regex)) {
-                    throw new Exception();
-                }
-                return str;
-            } catch (Exception e) {
-                System.out.println(errMsg);
-            }
-        }
-    }
 
+    //chấp nhận người dùng chỉ nhập vào 4 kí tự y,Y,n,N
+    //check equals ignore case với y => return true;
+    //                             n => return false;
+    //sử dụng 2 hàm này trong do-while
+    public static boolean getUserConfirmation(String msg) {
+        return getString(msg,Regex.YES_NO, Message.OPTIONS_IS_REQUIRED, Message.PLEASE_INPUT_Y_OR_N ).equalsIgnoreCase("y");
+    }
 }
