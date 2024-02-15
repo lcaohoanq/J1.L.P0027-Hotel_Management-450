@@ -22,6 +22,8 @@ public class HotelManagement implements Searchable, FileService {
     public void addNewHotel() {
         boolean isExisted;
         String id;
+        //show list hotel
+        this.displayHotelList();
         do {
             do {
                 isExisted = false; // reset isExisted
@@ -39,13 +41,16 @@ public class HotelManagement implements Searchable, FileService {
             } while (isExisted);
 
             String name = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_NAME, Regex.NAME, Message.HOTEL_NAME_IS_REQUIRED, Message.HOTEL_NAME_MUST_START_WITH_LETTER));
-            String room = StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_ROOM_AVAILABLE, Regex.ROOM,Message.HOTEL_ROOM_AVAILABLE_IS_REQUIRED, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER));
+            //khi add mot hotel moi, thi so phong phai lon hon 0
+            int room = Utils.getInt(Message.INPUT_HOTEL_ROOM_AVAILABLE,0);
             String address = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_HOTEL_ADDRESS, Regex.ADDRESS, Message.HOTEL_ADDRESS_IS_REQUIRED, Message.HOTEL_ADDRESS_MUST_SEPARATE_BY_COMMA));
             String phone = Utils.getString(Message.INPUT_HOTEL_PHONE, Regex.PHONE, Message.HOTEL_PHONE_IS_REQUIRED, Message.HOTEL_PHONE_MUST_START_WITH_0_AND_FOLLOW_9_DIGIT);
-            String rating = StringTools.formatRating(StringTools.formatNum(Utils.getString(Message.INPUT_HOTEL_RATING, Regex.ROOM, Message.HOTEL_RATING_IS_REQUIRED, Message.HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER)));
+            //so sao cua khach san phai lon hon 0 va nam trong khoang tu 1 den 7
+            int rating = Utils.getInt(Message.INPUT_HOTEL_RATING, Message.HOTEL_RATING_IS_REQUIRED_BETWEEN_1_AND_7, 1, 7);
             
             Hotel hotel = new Hotel(id, name, room, address, phone, rating);
             hotelList.add(hotel);
+            this.displayHotelList();
             System.out.println(Message.ADD_NEW_HOTEL_SUCCESSFULLY);
         } while (Utils.getUserConfirmation(Message.DO_YOU_WANT_TO_CONTINUE));
     }
@@ -64,7 +69,10 @@ public class HotelManagement implements Searchable, FileService {
                     System.out.println(Message.NO_HOTEL_FOUND);
                 } else {
                     System.out.println(Message.EXIST_HOTEL);
+                    StringTools.printTitle();
+                    StringTools.printLine();
                     hotel.showInfo();
+                    StringTools.printLine();
                 }
             } while (Utils.getUserConfirmation(Message.DO_YOU_WANT_TO_CONTINUE));
         }
@@ -94,15 +102,15 @@ public class HotelManagement implements Searchable, FileService {
                 // các field có thể rỗng nhưng nếu nhập phải theo regex
                 //chỉ xử lí các trường hợp tiêu biểu: dư khoảng trắng, xử lí rating sai grammar, bọc regex lại nhưng vẫn cho nhập rỗng
                 String newName = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_NEW_HOTEL_NAME_OR_BLANK, Regex.NAME, Message.HOTEL_NAME_MUST_START_WITH_LETTER));
-                String newRoom = StringTools.formatNum(Utils.getString(Message.INPUT_NEW_HOTEL_ROOM_AVAILABLE_OR_BLANK, Regex.ROOM, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER));
+                int newRoom = Utils.getInt(Message.INPUT_NEW_HOTEL_ROOM_AVAILABLE_OR_BLANK, Regex.ROOM, Message.HOTEL_ROOM_AVAILABLE_MUST_BE_A_POSITIVE_NUMBER);
                 String newAddress = StringTools.removeTwoSpace(Utils.getString(Message.INPUT_NEW_HOTEL_ADDRESS_OR_BLANK, Regex.ADDRESS, Message.HOTEL_ADDRESS_MUST_SEPARATE_BY_COMMA));
                 String newPhone = Utils.getString(Message.INPUT_NEW_HOTEL_PHONE_OR_BLANK, Regex.PHONE, Message.HOTEL_PHONE_MUST_START_WITH_0_AND_FOLLOW_9_DIGIT);
-                String newRating = StringTools.formatRating(StringTools.formatNum(Utils.getString(Message.INPUT_NEW_HOTEL_RATING_OR_BLANK, Regex.ROOM, Message.HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER)));
+                int newRating = Utils.getInt(Message.INPUT_NEW_HOTEL_RATING_OR_BLANK, Regex.ROOM, Message.HOTEL_RATING_IS_REQUIRED_BETWEEN_1_AND_7);
 
                 if(!newName.isEmpty()) {
                     hotel.setName(newName);
                 }
-                if(!newRoom.isEmpty()) {
+                if(newRoom != -1) {
                     hotel.setRoomAvailable(newRoom);
                 }
                 if(!newAddress.isEmpty()) {
@@ -111,13 +119,9 @@ public class HotelManagement implements Searchable, FileService {
                 if(!newPhone.isEmpty()) {
                     hotel.setPhone(newPhone);
                 }
-                if(!newRating.isEmpty()) {
+                if(newRating != -1) {
                     hotel.setRating(newRating);
                 }
-
-//                    Hotel newHotel = new Hotel(id, newName, newRoom, newAddress, newPhone, newRating);
-
-//                    hotelList.set(index, newHotel);
 
                 System.out.println("--------------------------------------------------------After updating: ---------------------------------------------------------------");
                 StringTools.printTitle();
@@ -134,6 +138,8 @@ public class HotelManagement implements Searchable, FileService {
         if(hotelList.isEmpty()){
             System.out.println(Message.NOTHING_TO + "delete");
         }else{
+            System.out.println("-------------------------------------------------Select the hotel want to delete below-------------------------------------------------");
+            this.displayHotelList();
             String id = Utils
                     .getString(Message.INPUT_HOTEL_ID, Regex.ID, Message.HOTEL_ID_IS_REQUIRED,
                             Message.HOTEL_ID_MUST_BE_H_AND_2_DIGITS).toUpperCase();
@@ -153,6 +159,7 @@ public class HotelManagement implements Searchable, FileService {
                 if (Utils.getUserConfirmation(Message.DO_YOU_READY_WANT_TO_DELETE_THIS_HOTEL)) {
                     hotelList.remove(hotel);
                     System.out.println(Message.DELETE_HOTEL_SUCCESSFULLY);
+                    this.displayHotelList();
                 }
             }
         }
@@ -193,7 +200,7 @@ public class HotelManagement implements Searchable, FileService {
     //Function 7: Display hotel and sort descending by hotel name
     public void displayHotelList() {
         if (hotelList.isEmpty()) {
-            System.out.println(Message.NOTHING_TO + "display");
+            System.out.println(Message.HOTEL_LIST_IS_EMPTY);
         }else{
             Comparator<Hotel> orderByName = new Comparator<Hotel>() {
                 @Override
@@ -293,7 +300,7 @@ public class HotelManagement implements Searchable, FileService {
         Comparator<Hotel> orderByRoomAvailable = new Comparator<Hotel>() {
             @Override
             public int compare(Hotel o1, Hotel o2) {
-                if(Integer.parseInt(o2.getRoomAvailable()) > Integer.parseInt(o1.getRoomAvailable())){
+                if(o2.getRoomAvailable() > o1.getRoomAvailable()){
                     return 1;
                 }
                 return -1;

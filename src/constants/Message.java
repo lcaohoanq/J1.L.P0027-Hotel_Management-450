@@ -9,7 +9,6 @@ public class Message {
     public static final String INPUT_HOTEL_ADDRESS = "Input hotel address: ";
     public static final String INPUT_HOTEL_PHONE = "Input hotel phone: ";
     public static final String INPUT_HOTEL_RATING = "Input hotel rating: ";
-    public static final String INPUT_YOUR_CHOICE = "Input your choice: ";
 
     // Validation messages for hotel information
     public static final String HOTEL_ID_MUST_BE_H_AND_2_DIGITS = "Hotel id must be in the format Hxx: H01, H02, ...";
@@ -27,7 +26,7 @@ public class Message {
     public static final String HOTEL_PHONE_IS_REQUIRED = "Hotel phone is required";
     public static final String HOTEL_RATING_IS_REQUIRED = "Hotel rating is required";
     public static final String OPTIONS_IS_REQUIRED = "Options is required";
-
+    public static final String HOTEL_RATING_IS_REQUIRED_BETWEEN_1_AND_7 = "Hotel rating is required between 1 and 7";
     //Update hotel
     public static final String INPUT_NEW_HOTEL_NAME_OR_BLANK = "Input new hotel name or a blank to keep the old value           : ";
     public static final String INPUT_NEW_HOTEL_ROOM_AVAILABLE_OR_BLANK = "Input new hotel room available or a blank to keep the old value : ";
@@ -42,6 +41,7 @@ public class Message {
     public static final String HOTEL_ADDRESS_NOT_FOUND = "Hotel address not found";
 
     //Existed hotel information
+    public static final String HOTEL_LIST_IS_EMPTY = "Hotel list is empty";
     public static final String NOTHING_TO = "Nothing to ";
     public static final String EXIST_HOTEL = "Exist Hotel";
     public static final String NO_HOTEL_FOUND = "No Hotel Found!";

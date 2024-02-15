@@ -82,7 +82,7 @@ public class Utils {
 
                 System.out.print(welcome);
                 number = Integer.parseInt(sc.nextLine());
-                if (number < min) {
+                if (number <= min) {
                     System.out.println("Number must be large than " + min);
                 } else {
                     check = false;
@@ -113,6 +113,25 @@ public class Utils {
                 }
                 return number;
             } catch (Exception e) {
+                System.out.println(errMsg);
+            }
+        }
+    }
+
+    //ép nhập số nguyên > 0 hoặc rỗng
+    public static int getInt(String inpMsg,String pattern, String errMsg){
+        System.out.print(inpMsg);
+        while(true){
+            try{
+                String number = sc.nextLine();
+                if(number.equals("")){
+                    return -1;
+                }else if(number.matches(pattern)){
+                    return Integer.parseInt(number.trim());
+                }else{
+                    throw new Exception();
+                }
+            }catch(Exception e){
                 System.out.println(errMsg);
             }
         }
