@@ -228,7 +228,7 @@ public class HotelManagement implements Searchable, FileService {
         try {
             File f = new File(url);
             if (!f.exists()) {
-                return;
+                throw new Exception();
             }
             FileInputStream fi = new FileInputStream(f);
             ObjectInputStream fo = new ObjectInputStream(fi);
@@ -254,8 +254,9 @@ public class HotelManagement implements Searchable, FileService {
     public void saveToFile(String url) {
         if (hotelList.isEmpty()) {
             System.out.println(Message.NOTHING_TO + "write, is empty list");
-        }else{
-            try {
+            return;
+        }
+        try {
                 FileOutputStream fOut = new FileOutputStream(url);
                 ObjectOutputStream out = new ObjectOutputStream(fOut);
                 for (Hotel item : hotelList) {
@@ -267,7 +268,6 @@ public class HotelManagement implements Searchable, FileService {
                 System.out.println(Message.SAVE_FILE_SUCCESS + url);
             } catch (IOException e) {
                 System.out.println(Message.SAVE_FILE_FAILED + e.getMessage());
-            }
         }
     }
 
