@@ -228,7 +228,7 @@ public class HotelManagement implements Searchable, FileService {
         try {
             File f = new File(url);
             if (!f.exists()) {
-                throw new Exception();
+                throw new Exception(Message.FILE_NOT_FOUND);
             }
             FileInputStream fi = new FileInputStream(f);
             ObjectInputStream fo = new ObjectInputStream(fi);
@@ -238,7 +238,7 @@ public class HotelManagement implements Searchable, FileService {
                     hotelList.add(hotel);
                 }
             } catch (EOFException e) {
-//                System.out.println("End of file " + e.getMessage());
+                // do nothing
             }
             fo.close();
             fi.close();

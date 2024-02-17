@@ -1,5 +1,7 @@
 package constants;
 
+import utils.ConsoleColors;
+
 public class Message {
 
     // Input prompts for hotel information
@@ -19,11 +21,11 @@ public class Message {
     public static final String HOTEL_RATING_MUST_BE_A_POSITIVE_NUMBER = "Hotel rating must be a positive number";
 
     //Validation message if null value
-    public static final String HOTEL_ID_IS_REQUIRED = "Hotel id is required";
+    public static final String HOTEL_ID_IS_REQUIRED = ConsoleColors.RED + "Hotel id is required" + ConsoleColors.RESET;
     public static final String HOTEL_NAME_IS_REQUIRED = "Hotel name is required";
     public static final String HOTEL_ROOM_AVAILABLE_IS_REQUIRED = "Hotel room available is required";
-    public static final String HOTEL_ADDRESS_IS_REQUIRED = "Hotel address is required";
-    public static final String HOTEL_PHONE_IS_REQUIRED = "Hotel phone is required";
+    public static final String HOTEL_ADDRESS_IS_REQUIRED = ConsoleColors.RED + "Hotel address is required" + ConsoleColors.RESET;
+    public static final String HOTEL_PHONE_IS_REQUIRED = ConsoleColors.RED + "Hotel phone is required" + ConsoleColors.RESET;
     public static final String HOTEL_RATING_IS_REQUIRED = "Hotel rating is required";
     public static final String OPTIONS_IS_REQUIRED = "Options is required";
     public static final String HOTEL_RATING_IS_REQUIRED_BETWEEN_1_AND_7 = "Hotel rating is required between 1 and 7";
@@ -37,31 +39,32 @@ public class Message {
     //Search hotel information
     public static final String HOTEL_ID_FOUNDED = "Hotel id founded: ";
     public static final String HOTEL_ID_NOT_FOUND = "Hotel id not found";
-    public static final String HOTEL_ADDRESS_FOUNDED = "Hotel address founded: ";
-    public static final String HOTEL_ADDRESS_NOT_FOUND = "Hotel address not found";
+    public static final String HOTEL_ADDRESS_FOUNDED = ConsoleColors.GREEN + "Hotel address founded: " + ConsoleColors.RESET;
+    public static final String HOTEL_ADDRESS_NOT_FOUND = ConsoleColors.RED + "Hotel address not found" + ConsoleColors.RESET;
 
     //Existed hotel information
-    public static final String HOTEL_LIST_IS_EMPTY = "Hotel list is empty";
+    public static final String HOTEL_LIST_IS_EMPTY = ConsoleColors.RED + "Hotel list is empty" + ConsoleColors.RESET;
     public static final String NOTHING_TO = "Nothing to ";
-    public static final String EXIST_HOTEL = "Exist Hotel";
-    public static final String NO_HOTEL_FOUND = "No Hotel Found!";
+    public static final String EXIST_HOTEL = ConsoleColors.GREEN + "exist hotel" + ConsoleColors.RESET;
+    public static final String NO_HOTEL_FOUND = ConsoleColors.RED + "No hotel found" + ConsoleColors.RESET;
     public static final String NO_HOTEL_FOUND_PLEASE_READ_FILE_FIRST = "No hotel found. Please read file first";
-    public static final String HOTEL_DOES_NOT_EXIST = "Hotel does not exist";
-    public static final String HOTEL_ID_IS_EXISTED = "Hotel id is existed";
+    public static final String HOTEL_DOES_NOT_EXIST = ConsoleColors.RED + "Hotel does not exist" + ConsoleColors.RESET;
+    public static final String HOTEL_ID_IS_EXISTED = ConsoleColors.RED + "Hotel id is existed" + ConsoleColors.RESET;
 
     // Operation 
-    public static final String ADD_NEW_HOTEL_SUCCESSFULLY = "Add new hotel successfully";
-    public static final String ADD_NEW_HOTEL_FAILED = "Add new hotel failed";
-    public static final String UPDATE_HOTEL_SUCCESSFULLY = "Update hotel successfully";
-    public static final String UPDATE_HOTEL_FAILED = "Update hotel failed";
-    public static final String DELETE_HOTEL_SUCCESSFULLY = "Delete hotel successfully";
-    public static final String DELETE_HOTEL_FAILED = "Delete hotel failed";
+    public static final String ADD_NEW_HOTEL_SUCCESSFULLY = ConsoleColors.GREEN + "Add new hotel successfully" + ConsoleColors.RESET;
+    public static final String ADD_NEW_HOTEL_FAILED = ConsoleColors.RED + "Add new hotel failed" + ConsoleColors.RESET;
+    public static final String UPDATE_HOTEL_SUCCESSFULLY = ConsoleColors.GREEN + "Update hotel successfully" + ConsoleColors.RESET;
+    public static final String UPDATE_HOTEL_FAILED = ConsoleColors.RED + "Update hotel failed" + ConsoleColors.RESET;
+    public static final String DELETE_HOTEL_SUCCESSFULLY = ConsoleColors.GREEN + "Delete hotel successfully" + ConsoleColors.RESET;
+    public static final String DELETE_HOTEL_FAILED = ConsoleColors.RED + "Delete hotel failed" + ConsoleColors.RESET;
 
     // File
-    public static final String READ_FILE_SUCCESS = "Read file success ";
-    public static final String READ_FILE_FAILED = "Read file failed ";
-    public static final String SAVE_FILE_SUCCESS = "Write file success ";
-    public static final String SAVE_FILE_FAILED = "Write file failed ";
+    public static final String FILE_NOT_FOUND = ConsoleColors.RED + "File not found" + ConsoleColors.RESET;;
+    public static final String READ_FILE_SUCCESS = ConsoleColors.GREEN + "Read file success " + ConsoleColors.RESET;
+    public static final String READ_FILE_FAILED = ConsoleColors.RED + "Read file failed " + ConsoleColors.RESET;
+    public static final String SAVE_FILE_SUCCESS = ConsoleColors.GREEN + "Save file success " + ConsoleColors.RESET;
+    public static final String SAVE_FILE_FAILED = ConsoleColors.RED + "Save file failed " + ConsoleColors.RESET;
 
     // User confirmation prompts
     public static final String DO_YOU_WANT_TO_CONTINUE = "Do you want to continue? (y/n): ";
